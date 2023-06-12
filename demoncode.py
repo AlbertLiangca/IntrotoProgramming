@@ -33,3 +33,6 @@ case1 = ['f','pi']
 
 
 AWordGame().outcome(case1)
+
+
+# change 1
