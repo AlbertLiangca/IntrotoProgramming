@@ -10,11 +10,10 @@ def pickApples():
         else:
             x = pickedapples[i-(p+1)]
         pickedapples.append(pickedapples[i-1]*2 - x)
-    """ if pickedapples[-1] > a:
+    if pickedapples[-1] > a:
         return []
     else:
-        return pickedapples"""
-    return pickedapples
+        return pickedapples
 
 print(pickApples())
 
