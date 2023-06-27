@@ -1,10 +1,11 @@
-encodedword = 'huffman'
+encodedword = 'broccoli'
 
 class node:
     def __init__(self, letter, freq):
         self.freq = freq
         self.letter = letter
         self.children = []
+        self.binarycode = ''
 
     def display(self, level = 0):
         print(' '* level + self.letter)
@@ -42,6 +43,7 @@ def HuffmanEncoder(parent, binarycode = ''):
 
     if len(parent.children) == 0:
         lettertobinary[parent.letter] = binarycode
+        parent.binarycode = binarycode
     else:
         HuffmanEncoder(parent.children[0], binarycode + '0')
         HuffmanEncoder(parent.children[1], binarycode + '1')
@@ -58,6 +60,26 @@ huffmanword = ''
 for letter in encodedword:
     huffmanword += lettertobinary[letter]
 
+def WalkTree(huffmanword, currentnode = binarytree):
+    while len(currentnode.children) != 0:
+        if huffmanword[0] == '0':
+            huffmanword = huffmanword[1:]
+            currentnode = currentnode.children[0]
+        elif huffmanword[0] == '1':
+            huffmanword = huffmanword[1:]
+            currentnode = currentnode.children[1]
+        
+    return currentnode.letter, huffmanword
+
+def HuffmanDecoder(restofword):
+    decodedword = ''
+    while len(restofword) != 0:
+        nextletter, restofword = WalkTree(restofword)
+        decodedword += nextletter
+    return decodedword  
+
 print(huffmanword)
 
 print(len(huffmanword))
+
+print(HuffmanDecoder(huffmanword))
