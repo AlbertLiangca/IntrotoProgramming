@@ -1,47 +1,26 @@
-initial = 'AAABBAABB'
+initial = 'BAAAAABAA'
 
-target = 'BAABAAABAABAABBBAAAAAABBAABBBBBBBABB'
-
-class node:
-    def __init__(self, word):
-        self.word = word
-        self.children = []
-        self.winstate = ''
-    
-    def display(self, level = 0):
-        print(' '* level + self.word)
-        for c in self.children:
-            c.display(level + 1)
-
-gametree = node(initial)
-
-def ABBAGameTree(parent, target):
-    if len(parent.word) == len(target):
-        return parent
-    
-    else:
-        parent.children.append(node(parent.word+'A'))
-        reverseb = parent.word + 'B'
-        parent.children.append(node(reverseb[::-1]))
-        for item in parent.children:
-            ABBAGameTree(item, target)
-
-ABBAGameTree(gametree, target)
+target = 'BAABAAAAAB'
 
 winstate = 'impossible'
 
-def WalkTree(parent):
+def ABBAGameTree(initial, target):
     
     global winstate
-
-    if len(parent.children) == 0:
-        if parent.word == target:
+    
+    if len(initial) == len(target):
+        if initial == target:
             winstate = 'possible'
+            return winstate
     
     else:
-        for item in parent.children:
-            WalkTree(item)
+        if target[-1] == 'A':
+            ABBAGameTree(initial, target[:-1])
+        if target[0] == 'B':
+            reverseb = target[1:]
+            ABBAGameTree(initial, reverseb[::-1])
     
     return winstate
 
-WalkTree(gametree)
+print(ABBAGameTree(initial, target))
+
